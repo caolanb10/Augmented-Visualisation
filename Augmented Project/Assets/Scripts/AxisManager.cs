@@ -72,13 +72,14 @@ public class AxisManager : MonoBehaviour
 	{
 		for(int i = 0; i < NumberOfAxisPoints; i ++)
 		{
-			Vector3 positionX = new Vector3(i, 0, 0);
-			Vector3 positionY = new Vector3(0, i, 0);
-			Vector3 positionZ = new Vector3(0, 0, i);
+			int offset = (i * 2) + 1;
+			Vector3 positionX = new Vector3(offset, 1, 0);
+			Vector3 positionY = new Vector3(1, offset, 0);
+			Vector3 positionZ = new Vector3(1, 0, offset);
 
-			GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity);
-			GameObject.Instantiate(GridPrefab, positionY, Quaternion.identity);
-			GameObject.Instantiate(GridPrefab, positionZ, Quaternion.identity);
+			GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity, AxisRoot.transform);
+			GameObject.Instantiate(GridPrefab, positionY, Quaternion.Euler(0,0,90), AxisRoot.transform);
+			GameObject.Instantiate(GridPrefab, positionZ, Quaternion.Euler(0,0,90), AxisRoot.transform);
 		}
 	}
 }
