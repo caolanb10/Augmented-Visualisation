@@ -73,13 +73,16 @@ public class AxisManager : MonoBehaviour
 		for(int i = 0; i < NumberOfAxisPoints; i ++)
 		{
 			int offset = (i * 2) + 1;
-			Vector3 positionX = new Vector3(offset, 1, 0);
-			Vector3 positionY = new Vector3(1, offset, 0);
-			Vector3 positionZ = new Vector3(1, 0, offset);
+			Vector3 positionX = new Vector3(offset, NumberOfAxisPoints, 0);
+			Vector3 positionY = new Vector3(NumberOfAxisPoints, offset, 0);
+			Vector3 positionZ = new Vector3(NumberOfAxisPoints, 0, offset);
 
-			GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity, AxisRoot.transform);
-			GameObject.Instantiate(GridPrefab, positionY, Quaternion.Euler(0,0,90), AxisRoot.transform);
-			GameObject.Instantiate(GridPrefab, positionZ, Quaternion.Euler(0,0,90), AxisRoot.transform);
+
+			GameObject gridlinex = GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity, AxisRoot.transform);
+			GameObject gridliney = GameObject.Instantiate(GridPrefab, positionY, Quaternion.Euler(0,0,90), AxisRoot.transform);
+			GameObject gridlinez = GameObject.Instantiate(GridPrefab, positionZ, Quaternion.Euler(0,0,90), AxisRoot.transform);
+
+			// gridlinex.transform.localScale.y = NumberOfAxisPoints;
 		}
 	}
 }
