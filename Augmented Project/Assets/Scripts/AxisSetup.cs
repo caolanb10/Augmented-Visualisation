@@ -8,7 +8,7 @@ public class AxisSetup : MonoBehaviour
 	public GameObject AxisText;
 	public TextMeshPro AxisTextMesh;
 
-	public void AssignAxisLabel(int label)
+	public void AssignAxisLabel(float label)
 	{
 		AxisTextMesh.text = label.ToString();
 	}

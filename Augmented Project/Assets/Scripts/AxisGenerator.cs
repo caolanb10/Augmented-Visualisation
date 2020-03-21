@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using static Axis;
 
 public class AxisGenerator : MonoBehaviour
@@ -17,21 +18,13 @@ public class AxisGenerator : MonoBehaviour
 	public float AxisPieceScale = 0.5f;
 
 	int size;
-	public int[] AxisPoints;
+	public float[] AxisPoints;
 
 	int AmountToMove = 2;
 
-	public void Draw(int[] vals, AxisDirection direction)
+	public void Draw(float[] vals, AxisDirection direction)
 	{
 		this.Direction = direction;
-		if(direction == AxisDirection.Y)
-		{
-
-		}
-		if (direction == AxisDirection.Z)
-		{
-
-		}
 		AxisPoints = vals;
 		InstantiateGameObjects();
 		CreateAxis();
@@ -59,6 +52,12 @@ public class AxisGenerator : MonoBehaviour
 			AxisPieces[i] = GameObject.Instantiate(AxisPiecePrefab, gameObject.transform, false);
 			AxisPieces[i].transform.Translate(position);
 			AxisPieces[i].GetComponentInChildren<AxisSetup>().AssignAxisLabel(AxisPoints[i]);
+
+			//Rotate text for Y axis
+			if (Direction == AxisDirection.Y)
+			{
+				AxisPieces[i].GetComponentInChildren<TextMeshPro>().gameObject.transform.Rotate(new Vector3(0, 0, -90.0f));
+			}
 		}
 	}
 }

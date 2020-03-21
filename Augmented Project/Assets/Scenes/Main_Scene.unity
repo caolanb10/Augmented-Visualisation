@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 245488309}
   - component: {fileID: 245488308}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: AxisManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,10 +151,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AxisPrefab: {fileID: 7234384318009312800, guid: d30b152372326ac478cc6af5fad26bd8,
     type: 3}
+  AxisOriginPrefab: {fileID: 6735202126451526771, guid: fe396e4bf1c5a644ea23b02ccf84a154,
+    type: 3}
+  GridPrefab: {fileID: 3094896607780364913, guid: 12dbd4f9fdb74d342b0b2b7f0e45aa15,
+    type: 3}
+  AxisRoot: {fileID: 1793083095}
+  DebugEnabled: 1
   Axes: []
-  XValues: 020000000400000006000000
-  YValues: 080000000a0000000c000000
-  ZValues: 0e0000001000000012000000
+  NumberOfAxisPoints: 10
 --- !u!4 &245488309
 Transform:
   m_ObjectHideFlags: 0
@@ -163,7 +167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245488307}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 347.5, y: 195.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -728,6 +732,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607383020}
   m_CullTransparentMesh: 0
+--- !u!1 &1793083095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1793083096}
+  m_Layer: 0
+  m_Name: AxisRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1793083096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793083095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2122433459
 GameObject:
   m_ObjectHideFlags: 0

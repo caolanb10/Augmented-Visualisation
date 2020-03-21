@@ -5,29 +5,80 @@ using static Axis;
 
 public class AxisManager : MonoBehaviour
 {
-	// Prefab for generating x, y and z axes
+	// Prefabs
 	public GameObject AxisPrefab;
+	public GameObject AxisOriginPrefab;
+	public GameObject GridPrefab;
+
+	// Reference to game object in scene that holds all axis objects
+	public GameObject AxisRoot;
+
+	public bool DebugEnabled;
 
 	// x, y, z axes
 	public GameObject[] Axes;
 
-	public int[] XValues = { 2, 4, 6 };
+	public int NumberOfAxisPoints = 10;
 
-	public int[] YValues = { 8, 10, 12};
+	float[] XValues = { 2, 4, 6, 8, 10, 12, 14, 16, 18 };
+	float[] YValues = { 100, 200, 300, 400, 500 };
+	float[] ZValues = { 0.4f, 0.6f, 0.8f };
 
-	public int[] ZValues = { 14, 16, 18 };
 
 	public void CreateAxes()
 	{
+		// Origin
+		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
 		Axes = new GameObject[3];
-		Axes[(int)AxisDirection.X] = GameObject.Instantiate(AxisPrefab, Vector3.zero, Quaternion.identity);
-		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(XValues, AxisDirection.X);
-		
-		Axes[(int)AxisDirection.Y] = GameObject.Instantiate(AxisPrefab, Vector3.zero, Quaternion.Euler(0, 0, 90.0f));
-		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(YValues, AxisDirection.Y);
 
-		Axes[(int)AxisDirection.Z] = GameObject.Instantiate(AxisPrefab, Vector3.zero, Quaternion.Euler(0, -90.0f, 0));
-		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(ZValues, AxisDirection.Z);
-		
+		CreateAxis(AxisDirection.X, Quaternion.identity);
+		CreateAxis(AxisDirection.Y, Quaternion.Euler(0, 0, 90.0f));
+		CreateAxis(AxisDirection.Z, Quaternion.Euler(0, -90.0f, 0));
+
+		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(XValues)), AxisDirection.X);
+		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(YValues)), AxisDirection.Y);
+		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(ZValues)), AxisDirection.Z);
+
+		DrawGrid();
+	}
+
+	void CreateAxis(AxisDirection direction, Quaternion rotation)
+	{
+		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
+	}
+
+	float HighestValue(float[] vals)
+	{
+		float max = 0;
+		foreach(float val in vals)
+		{
+			max = val > max ? val : max;
+		}
+		return max;
+	}
+
+	float[] CreateAxisPointsFromMax(float max)
+	{
+		float[] axisPoints = new float[NumberOfAxisPoints];
+		for(int i = 0; i < NumberOfAxisPoints; i++)
+		{
+			axisPoints[i] = (max / NumberOfAxisPoints) * (i + 1);
+			if(DebugEnabled) Debug.Log("Point " + i + " is " + axisPoints[i]);
+		}
+		return axisPoints;
+	}
+
+	void DrawGrid()
+	{
+		for(int i = 0; i < NumberOfAxisPoints; i ++)
+		{
+			Vector3 positionX = new Vector3(i, 0, 0);
+			Vector3 positionY = new Vector3(0, i, 0);
+			Vector3 positionZ = new Vector3(0, 0, i);
+
+			GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity);
+			GameObject.Instantiate(GridPrefab, positionY, Quaternion.identity);
+			GameObject.Instantiate(GridPrefab, positionZ, Quaternion.identity);
+		}
 	}
 }
