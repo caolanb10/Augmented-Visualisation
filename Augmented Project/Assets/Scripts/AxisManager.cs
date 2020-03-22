@@ -5,10 +5,11 @@ using static Axis;
 
 public class AxisManager : MonoBehaviour
 {
+	GridManager GridManager;
+
 	// Prefabs
 	public GameObject AxisPrefab;
 	public GameObject AxisOriginPrefab;
-	public GameObject GridPrefab;
 
 	// Reference to game object in scene that holds all axis objects
 	public GameObject AxisRoot;
@@ -24,6 +25,10 @@ public class AxisManager : MonoBehaviour
 	float[] YValues = { 100, 200, 300, 400, 500 };
 	float[] ZValues = { 0.4f, 0.6f, 0.8f };
 
+	void Start()
+	{
+		GridManager = GetComponent<GridManager>();
+	}
 
 	public void CreateAxes()
 	{
@@ -39,7 +44,7 @@ public class AxisManager : MonoBehaviour
 		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(YValues)), AxisDirection.Y);
 		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(ZValues)), AxisDirection.Z);
 
-		DrawGrid();
+		GridManager.DrawGrid(NumberOfAxisPoints);
 	}
 
 	void CreateAxis(AxisDirection direction, Quaternion rotation)
@@ -66,23 +71,5 @@ public class AxisManager : MonoBehaviour
 			if(DebugEnabled) Debug.Log("Point " + i + " is " + axisPoints[i]);
 		}
 		return axisPoints;
-	}
-
-	void DrawGrid()
-	{
-		for(int i = 0; i < NumberOfAxisPoints; i ++)
-		{
-			int offset = (i * 2) + 1;
-			Vector3 positionX = new Vector3(offset, NumberOfAxisPoints, 0);
-			Vector3 positionY = new Vector3(NumberOfAxisPoints, offset, 0);
-			Vector3 positionZ = new Vector3(NumberOfAxisPoints, 0, offset);
-
-
-			GameObject gridlinex = GameObject.Instantiate(GridPrefab, positionX, Quaternion.identity, AxisRoot.transform);
-			GameObject gridliney = GameObject.Instantiate(GridPrefab, positionY, Quaternion.Euler(0,0,90), AxisRoot.transform);
-			GameObject gridlinez = GameObject.Instantiate(GridPrefab, positionZ, Quaternion.Euler(0,0,90), AxisRoot.transform);
-
-			// gridlinex.transform.localScale.y = NumberOfAxisPoints;
-		}
 	}
 }

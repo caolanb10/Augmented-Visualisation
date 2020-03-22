@@ -9,6 +9,7 @@ public class AxisGenerator : MonoBehaviour
 	// Prefab objects to be instantiated
 	public GameObject AxisTopPrefab;
 	public GameObject AxisPiecePrefab;
+	public GameObject AxisHalfPiecePrefab;
 
 	// Game objects actually existing in this prefab
 	public GameObject AxisTop;
@@ -38,16 +39,12 @@ public class AxisGenerator : MonoBehaviour
 
 	public void CreateAxis()
 	{
-		Vector3 TopTransform = new Vector3((AmountToMove * size) + 1, 0, 0);
-
-		AxisTop = GameObject.Instantiate(AxisTopPrefab, gameObject.transform, false);
-		AxisTop.transform.Translate(TopTransform);
-
-		TopTransform.y += size * AmountToMove;
+		MoveTopPiece();
+		AddStartPiece();
 
 		for (int i = 0; i < size; i++)
 		{
-			Vector3 position = new Vector3((i * AmountToMove) + 1, 0, 0);
+			Vector3 position = new Vector3((i * AmountToMove) + 2, 0, 0);
 
 			AxisPieces[i] = GameObject.Instantiate(AxisPiecePrefab, gameObject.transform, false);
 			AxisPieces[i].transform.Translate(position);
@@ -59,5 +56,21 @@ public class AxisGenerator : MonoBehaviour
 				AxisPieces[i].GetComponentInChildren<TextMeshPro>().gameObject.transform.Rotate(new Vector3(0, 0, -90.0f));
 			}
 		}
+	}
+
+	// Moves top piece (cone) to its correct distance from the origin
+	public void MoveTopPiece()
+	{
+		Vector3 TopTransform = new Vector3((AmountToMove * size) + 2, 0, 0);
+		AxisTop = GameObject.Instantiate(AxisTopPrefab, gameObject.transform, false);
+		AxisTop.transform.Translate(TopTransform);
+		TopTransform.y += size * AmountToMove;
+	}
+
+	// Places a half piece (a unit) after the origin
+	public void AddStartPiece()
+	{
+		GameObject AxisHalfPiece = GameObject.Instantiate(AxisHalfPiecePrefab, gameObject.transform, false);
+		AxisHalfPiece.transform.Translate(new Vector3(0.5F, 0, 0));
 	}
 }

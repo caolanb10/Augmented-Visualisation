@@ -47,7 +47,10 @@ MonoBehaviour:
     type: 3}
   AxisPiecePrefab: {fileID: 1634766238397877546, guid: 58cbff1c204007f49876a34152827deb,
     type: 3}
+  AxisHalfPiecePrefab: {fileID: 6379618913881693800, guid: 401dd792b07eaa24f8dc4539f6fa760d,
+    type: 3}
   AxisTop: {fileID: 5343204080838194167, guid: d2d4fe110f96f5447a37778935bfb4c9, type: 3}
   AxisPieces: []
+  Direction: 0
   AxisPieceScale: 0.5
-  size: 0
+  AxisPoints: []
