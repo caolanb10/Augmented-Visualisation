@@ -7,19 +7,28 @@ public class AxisManager : MonoBehaviour
 {
 	GridManager GridManager;
 
-	// Prefabs
+	// Prefabs_Axis
 	public GameObject AxisPrefab;
 	public GameObject AxisOriginPrefab;
 
-	// Reference to game object in scene that holds all axis objects
+	// Prefabs_DataPoints
+	public GameObject DataPointPrefab;
+
+	// Reference to game objects that have hierarchy for given game object type
 	public GameObject AxisRoot;
+	public GameObject DataPointRoot;
 
 	public bool DebugEnabled;
 
 	// x, y, z axes
 	public GameObject[] Axes;
 
-	public int NumberOfAxisPoints = 10;
+	public int NumberOfAxisPoints = 20;
+
+
+	float HighestValueX;
+	float HighestValueY;
+	float HighestValueZ;
 
 	float[] XValues = { 2, 4, 6, 8, 10, 12, 14, 16, 18 };
 	float[] YValues = { 100, 200, 300, 400, 500 };
@@ -32,6 +41,10 @@ public class AxisManager : MonoBehaviour
 
 	public void CreateAxes()
 	{
+		HighestValueX = HighestValue(XValues);
+		HighestValueY = HighestValue(YValues);
+		HighestValueZ = HighestValue(ZValues);
+
 		// Origin
 		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
 		Axes = new GameObject[3];
@@ -71,5 +84,24 @@ public class AxisManager : MonoBehaviour
 			if(DebugEnabled) Debug.Log("Point " + i + " is " + axisPoints[i]);
 		}
 		return axisPoints;
+	}
+
+	public void SamplePlot()
+	{
+		PlotGameObject(9.0f, 250.0f, 0.4f);
+	}
+
+	public void PlotGameObject(float x, float y, float z)
+	{
+		Debug.Log("highest x" + HighestValueX);
+		Debug.Log("highest y" + HighestValueY);
+		Debug.Log("highest z" + HighestValueZ);
+
+		float displacementx = (x / HighestValueX) * NumberOfAxisPoints * 2;
+		float displacementy = (y / HighestValueY) * NumberOfAxisPoints * 2;
+		float displacementz = (z / HighestValueZ) * NumberOfAxisPoints * 2;
+
+		GameObject.Instantiate(DataPointPrefab, new Vector3(displacementx, displacementy, displacementz), 
+			Quaternion.identity, DataPointRoot.transform);
 	}
 }

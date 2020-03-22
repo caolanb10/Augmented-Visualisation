@@ -29,35 +29,36 @@ public class GridManager : MonoBehaviour
 			Vector3 positionZX = new Vector3(NumberOfAxisPoints, 0, offset);
 			Vector3 positionZY = new Vector3(0, NumberOfAxisPoints, offset);
 
-			DrawGridLine(positionXY, positionXZ, Quaternion.identity, Quaternion.Euler(0, 90, 90));
-			DrawGridLine(positionYX, positionYZ, Quaternion.Euler(0, 0, 90), Quaternion.Euler(0, 90, 90));
-			DrawGridLine(positionZX, positionZY, Quaternion.Euler(0, 0, 90), Quaternion.identity);
+			DrawGridLinesABAC(positionXY, positionXZ, Quaternion.identity, Quaternion.Euler(0, 90, 90));
+			DrawGridLinesABAC(positionYX, positionYZ, Quaternion.Euler(0, 0, 90), Quaternion.Euler(0, 90, 90));
+			DrawGridLinesABAC(positionZX, positionZY, Quaternion.Euler(0, 0, 90), Quaternion.identity);
 
 			for(int j = 0; j <= NumberOfAxisPoints; j++)
 			{
 				int offset2 = (j * 2);
 
-				DrawGridLine(
+				DrawGridLinesABAC(
 					new Vector3(positionXZ.x, offset2, positionXZ.z), 
 					new Vector3(positionZX.x, offset2, positionZX.z), 
 					Quaternion.Euler(0, 90, 90),
 					Quaternion.Euler(0, 0, 90)
 					);
 
-				GameObject line = GameObject.Instantiate(GridPrefab, new Vector3(positionXY.x, positionXY.y, offset2), Quaternion.identity, GridRoot.transform);
-
-				line.transform.localScale = GridScale;
+				DrawGridLine(new Vector3(positionXY.x, positionXY.y, offset2), Quaternion.identity);
 			}
 		}
 	}
 
-	void DrawGridLine(Vector3 positionab, Vector3 positionac, Quaternion rotationab, Quaternion rotationac)
+	void DrawGridLinesABAC(Vector3 positionab, Vector3 positionac, Quaternion rotationab, Quaternion rotationac)
 	{
-		GameObject gridlineab = GameObject.Instantiate(GridPrefab, positionab, rotationab, GridRoot.transform);
-		GameObject gridlineac = GameObject.Instantiate(GridPrefab, positionac, rotationac, GridRoot.transform);
+		DrawGridLine(positionab, rotationab);
+		DrawGridLine(positionac, rotationac);
+	}
 
-		gridlineab.transform.localScale = GridScale;
-		gridlineac.transform.localScale = GridScale;
+	void DrawGridLine(Vector3 position, Quaternion rotation)
+	{
+		GameObject gridline = GameObject.Instantiate(GridPrefab, position, rotation, GridRoot.transform);
+		gridline.transform.localScale = GridScale;
 	}
 
 	public void ChangeGridEnabled()
