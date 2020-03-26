@@ -14,6 +14,13 @@ public class CsvParser : MonoBehaviour
 
 	string FilePath;
 
+	static string DatasetDirectoryPath = "Assets/Datasets";
+	static string[] DatasetNames = new string[] { "attractions.csv", "test.csv" };
+	string[] DatasetPaths = new string[] {
+		DatasetDirectoryPath + DatasetNames[0],
+		DatasetDirectoryPath + DatasetNames[1]
+	};
+
 	StreamReader Stream;
 	
 	public void InitialiseHeaders()
