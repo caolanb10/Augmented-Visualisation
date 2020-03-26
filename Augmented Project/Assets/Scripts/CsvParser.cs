@@ -19,7 +19,6 @@ public class CsvParser : MonoBehaviour
 	public void InitialiseHeaders()
 	{
 		Headers = Lines[0].Split(',');
-
 		Columns = Headers.Length;
 	}
 
@@ -41,13 +40,13 @@ public class CsvParser : MonoBehaviour
 		{
 			Debug.Log("Not Found");
 		}
-
 		Stream = new StreamReader(path);
+
+		InitialiseHeaders();
 
 		string fileContent = Stream.ReadToEnd();
 
 		Lines = fileContent.Split('\n');
 
-		InitialiseHeaders();
 	}
 }
