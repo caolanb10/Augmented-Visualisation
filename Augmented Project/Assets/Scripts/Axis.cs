@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Axis : MonoBehaviour
 {
+	public const int NumberOfDirections = 3;
+
 	public enum AxisDirection
 	{
 		X = 0,

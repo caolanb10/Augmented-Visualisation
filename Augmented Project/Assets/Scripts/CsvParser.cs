@@ -3,41 +3,65 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using static Axis;
 
 public class CsvParser : MonoBehaviour
 {
-	int Columns;
+	public VisualisationManager VisualisationManager;
+	public int NumberOfColumns;
+	public int NumberOfRows;
 
-	string[] Headers;
+	string[] ColumnNames;
+	string[] Rows;
 
-	string[] Lines;
+	public string[,] Data;
 
 	string FilePath;
 
-	static string DatasetDirectoryPath = "Assets/Datasets";
-	static string[] DatasetNames = new string[] { "attractions.csv", "test.csv" };
-	string[] DatasetPaths = new string[] {
-		DatasetDirectoryPath + DatasetNames[0],
-		DatasetDirectoryPath + DatasetNames[1]
+	static string DatasetDirectoryPath = "Assets/Datasets/";
+	public static string[] DatasetPaths = new string[] {
+		DatasetDirectoryPath + "attractions.csv",
+		DatasetDirectoryPath + "test.csv"
 	};
+
+	public int[,] DataSetNumericalDataIndex = new int[2, Axis.NumberOfDirections]
+	{ { 0 ,0, 0 }, { 0, 1, 2 } };
+
 
 	StreamReader Stream;
 	
-	public void InitialiseHeaders()
+	public void ReadHeaders()
 	{
-		Headers = Lines[0].Split(',');
-		Columns = Headers.Length;
+		ColumnNames = Rows[0].Split(',');
+		NumberOfColumns = ColumnNames.Length;
 	}
 
-	public void TestFile()
+	public void ReadData()
 	{
-		ReadData("Assets/Datasets/attractions.csv");
+		for (int i = 0; i < NumberOfRows - 1; i++)
+		{
+			int index = i + 1;
+			string[] currentRow = Rows[index].Split(',');
+			for(int j = 0; j < NumberOfColumns; j++)
+			{
+				Data[i,j] = currentRow[j];
+			}
+		}
+	}
+
+	public void InitDataArray()
+	{
+		Data = new string[NumberOfRows, NumberOfColumns];
+	}
+
+	public void ChooseDataSet(int index)
+	{
+		ReadData(DatasetPaths[index]);
+		VisualisationManager.Visualise(index);
 	}
 
 	public void ReadData(string path)
 	{
-		Debug.Log(Directory.GetCurrentDirectory());
-
 		FilePath = path;
 		if (File.Exists(FilePath))
 		{
@@ -47,13 +71,15 @@ public class CsvParser : MonoBehaviour
 		{
 			Debug.Log("Not Found");
 		}
-		Stream = new StreamReader(path);
-
-		InitialiseHeaders();
+		Stream = new StreamReader(FilePath);
 
 		string fileContent = Stream.ReadToEnd();
 
-		Lines = fileContent.Split('\n');
+		Rows = fileContent.Split('\n');
+		NumberOfRows = Rows.Length - 1;
 
+		ReadHeaders();
+		InitDataArray();
+		ReadData();
 	}
 }

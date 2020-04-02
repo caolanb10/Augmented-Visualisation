@@ -121,7 +121,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3783994506502078606}
-  - {fileID: 6102317016763248518}
+  - {fileID: 9104665220050012472}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60ab8e86a0b2634983a6400ff8a574e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DataPopup: {fileID: 8903347470275443519}
---- !u!1001 &4945556489333688559
+  DataPopup: {fileID: 5871153925795749249}
+--- !u!1001 &7951009849788935761
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -208,7 +208,7 @@ PrefabInstance:
     - target: {fileID: 1156841892397344617, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.129
+      value: 1.1289978
       objectReference: {fileID: 0}
     - target: {fileID: 1156841892397344617, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
@@ -253,19 +253,44 @@ PrefabInstance:
     - target: {fileID: 4552345610203640784, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: DataPoint_Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7291d717acd91d44a5697542aa2cb46, type: 3}
---- !u!1 &8903347470275443519 stripped
+--- !u!1 &5871153925795749249 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4552345610203640784, guid: c7291d717acd91d44a5697542aa2cb46,
     type: 3}
-  m_PrefabInstance: {fileID: 4945556489333688559}
+  m_PrefabInstance: {fileID: 7951009849788935761}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &6102317016763248518 stripped
+--- !u!224 &9104665220050012472 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1156841892397344617, guid: c7291d717acd91d44a5697542aa2cb46,
     type: 3}
-  m_PrefabInstance: {fileID: 4945556489333688559}
+  m_PrefabInstance: {fileID: 7951009849788935761}
   m_PrefabAsset: {fileID: 0}

@@ -17,22 +17,18 @@ public class AxisManager : MonoBehaviour
 	// Reference to game objects that have hierarchy for given game object type
 	public GameObject AxisRoot;
 	public GameObject DataPointRoot;
-
-	public bool DebugEnabled;
-
 	// x, y, z axes
 	public GameObject[] Axes;
 
+	public bool DebugEnabled;
+
 	public int NumberOfAxisPoints = 20;
 
-
-	float HighestValueX;
-	float HighestValueY;
-	float HighestValueZ;
-
-	float[] XValues = { 2, 4, 6, 8, 10, 12, 14, 16, 18 };
-	float[] YValues = { 100, 200, 300, 400, 500 };
-	float[] ZValues = { 0.4f, 0.6f, 0.8f };
+	// { maxX, maxY, maxZ }
+	public float[] DataValuesMax = new float[Axis.NumberOfDirections] { 0, 0, 0 };
+	
+	// { {x, y, z}, {x, y, z} } \\
+	public float[,] DataValues;
 
 	void Start()
 	{
@@ -41,11 +37,8 @@ public class AxisManager : MonoBehaviour
 
 	public void CreateAxes()
 	{
-		HighestValueX = HighestValue(XValues);
-		HighestValueY = HighestValue(YValues);
-		HighestValueZ = HighestValue(ZValues);
-
 		// Origin
+		GetHighestValues();
 		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
 		Axes = new GameObject[3];
 
@@ -53,29 +46,34 @@ public class AxisManager : MonoBehaviour
 		CreateAxis(AxisDirection.Y, Quaternion.Euler(0, 0, 90.0f));
 		CreateAxis(AxisDirection.Z, Quaternion.Euler(0, -90.0f, 0));
 
-		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(XValues)), AxisDirection.X);
-		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(YValues)), AxisDirection.Y);
-		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(CreateAxisPointsFromMax(HighestValue(ZValues)), AxisDirection.Z);
+		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>()
+			.Draw(CreateAxisPointsFromMax(DataValuesMax[0]), AxisDirection.X);
+
+		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>()
+			.Draw(CreateAxisPointsFromMax(DataValuesMax[1]), AxisDirection.Y);
+
+		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>()
+			.Draw(CreateAxisPointsFromMax(DataValuesMax[2]), AxisDirection.Z);
 
 		GridManager.DrawGrid(NumberOfAxisPoints);
 	}
 
-	void CreateAxis(AxisDirection direction, Quaternion rotation)
+	private void CreateAxis(AxisDirection direction, Quaternion rotation)
 	{
 		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
 	}
 
-	float HighestValue(float[] vals)
+	private void GetHighestValues()
 	{
-		float max = 0;
-		foreach(float val in vals)
+		for (int i = 0; i < (DataValues.Length/3); i++)
 		{
-			max = val > max ? val : max;
+			DataValuesMax[0] = DataValues[i, 0] > DataValuesMax[0] ? DataValues[i, 0] : DataValuesMax[0];
+			DataValuesMax[1] = DataValues[i, 1] > DataValuesMax[1] ? DataValues[i, 1] : DataValuesMax[1];
+			DataValuesMax[2] = DataValues[i, 2] > DataValuesMax[2] ? DataValues[i, 2] : DataValuesMax[2];
 		}
-		return max;
 	}
 
-	float[] CreateAxisPointsFromMax(float max)
+	private float[] CreateAxisPointsFromMax(float max)
 	{
 		float[] axisPoints = new float[NumberOfAxisPoints];
 		for(int i = 0; i < NumberOfAxisPoints; i++)
@@ -86,22 +84,25 @@ public class AxisManager : MonoBehaviour
 		return axisPoints;
 	}
 
-	public void SamplePlot()
+	public void PlotAllPoints()
 	{
-		PlotGameObject(9.0f, 250.0f, 0.4f);
+		for (int i = 0; i < DataValues.Length / 3; i++)
+		{
+			PlotGameObject(DataValues[i, 0], DataValues[i, 1], DataValues[i, 2]);
+		}
 	}
 
 	public void PlotGameObject(float x, float y, float z)
 	{
-		Debug.Log("highest x" + HighestValueX);
-		Debug.Log("highest y" + HighestValueY);
-		Debug.Log("highest z" + HighestValueZ);
+		GameObject point = GameObject.Instantiate(DataPointPrefab, 
+			new Vector3(
+				(x / DataValuesMax[0]) * NumberOfAxisPoints * 2,
+				(y / DataValuesMax[1]) * NumberOfAxisPoints * 2,
+				(z / DataValuesMax[2]) * NumberOfAxisPoints * 2
+			),
+			Quaternion.identity, 
+			DataPointRoot.transform);
 
-		float displacementx = (x / HighestValueX) * NumberOfAxisPoints * 2;
-		float displacementy = (y / HighestValueY) * NumberOfAxisPoints * 2;
-		float displacementz = (z / HighestValueZ) * NumberOfAxisPoints * 2;
-
-		GameObject.Instantiate(DataPointPrefab, new Vector3(displacementx, displacementy, displacementz), 
-			Quaternion.identity, DataPointRoot.transform);
+		// point.GetComponent<>()
 	}
 }
