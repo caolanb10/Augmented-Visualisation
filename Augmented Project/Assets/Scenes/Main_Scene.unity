@@ -2736,6 +2736,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Hide/Show Grid
       m_Image: {fileID: 0}
+    - m_Text: Hide/Show Datapoint Values
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2800,6 +2802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridManager: {fileID: 245488310}
+  DataPointRoot: {fileID: 0}
+  Datapoints: []
 --- !u!1 &1894250720
 GameObject:
   m_ObjectHideFlags: 0
