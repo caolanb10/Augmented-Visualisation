@@ -17,6 +17,7 @@ public class AxisManager : MonoBehaviour
 	// Reference to game objects that have hierarchy for given game object type
 	public GameObject AxisRoot;
 	public GameObject DataPointRoot;
+
 	// x, y, z axes
 	public GameObject[] Axes;
 
@@ -103,6 +104,7 @@ public class AxisManager : MonoBehaviour
 			Quaternion.identity, 
 			DataPointRoot.transform);
 
+		// TODO add the data to the game objects script.
 		// point.GetComponent<>()
 	}
 }

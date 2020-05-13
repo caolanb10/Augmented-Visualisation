@@ -9,25 +9,64 @@ public class ControlSettings : MonoBehaviour
 	public GameObject DataPointRoot;
 	public GameObject[] Datapoints;
 
-	public void ShowHideGrid(int index)
+	bool DataPointsEnabled = false;
+	int NumberOfDataPoints;
+
+	public void HandleValueChanged(int index)
 	{
-		if (index == 1)
+		switch (index)
 		{
-			GridManager.ChangeGridEnabled();
-			gameObject.GetComponent<Dropdown>().value = 0;
+			case 1:
+				GridManager.ChangeGridEnabled();
+				break;
+			case 2:
+				EnableOrDisableLabels();
+				break;
+			default:
+				break;
 		}
-		if (index == 2)
-		{
-			
-		}
+		ResetDropdown();
 	}
 
-	public void GetDataPoints(int size)
+	/// <summary>
+	/// After action is called, change value of dropdown to the 
+	/// first value which is the title of the dropdown
+	/// </summary>
+	public void ResetDropdown()
 	{
-		Datapoints = new GameObject[size];
-		for (int i = 0; i < size; i++)
+		gameObject.GetComponent<Dropdown>().value = 0;
+	}
+
+	/// <summary>
+	/// For each data point in the visualisation, either enable or disable the textual
+	/// annotation for that data point (visual preference/additional encoding)
+	/// 
+	/// On first call of this function we must find and store a reference for all these data points.
+	/// 
+	/// For subsequent calls, we will use the saved references from the previous call to save time. 
+	/// </summary>
+	public void EnableOrDisableLabels()
+	{
+		DataPointsEnabled = !DataPointsEnabled;
+
+		if(Datapoints == null)
 		{
-			Datapoints[i] = DataPointRoot.transform.GetChild(i).gameObject;
+			Debug.Log("First call");
+			NumberOfDataPoints = DataPointRoot.transform.childCount;
+			Debug.Log(NumberOfDataPoints);
+			Datapoints = new GameObject[NumberOfDataPoints];
+		}
+		else
+		{
+			Debug.Log(Datapoints);
+			Debug.Log("Second Call");
+		}
+
+		for (int i = 0; i < NumberOfDataPoints; i ++)
+		{
+			GameObject foundChild = DataPointRoot.transform.GetChild(i).gameObject;
+			Debug.Log(foundChild != null);
+			Datapoints[i] = foundChild;
 		}
 	}
 }
