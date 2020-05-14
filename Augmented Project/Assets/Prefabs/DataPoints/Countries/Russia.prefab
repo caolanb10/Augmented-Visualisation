@@ -7,10 +7,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1544361827874597953, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 969f3bbce54d4e54991b1090d1a69417, type: 2}
     - target: {fileID: 5726869053560022948, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_Name
-      value: DataPoint_Sphere
+      value: Russia
       objectReference: {fileID: 0}
     - target: {fileID: 6619071858516998660, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
@@ -66,6 +71,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725711030442801515, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.043880932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725711030442801515, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 5.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725711030442801515, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9990367
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f14ca2d2bce062c4ebcccfa93d8ab699, type: 3}
