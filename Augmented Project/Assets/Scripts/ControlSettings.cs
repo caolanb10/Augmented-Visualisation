@@ -49,7 +49,7 @@ public class ControlSettings : MonoBehaviour
 	{
 		DataPointsEnabled = !DataPointsEnabled;
 
-		if(Datapoints == null)
+		if(Datapoints.Length == 0)
 		{
 			Debug.Log("First call");
 			NumberOfDataPoints = DataPointRoot.transform.childCount;
