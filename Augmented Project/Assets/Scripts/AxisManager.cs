@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Axis;
 
+/// <summary>
+/// 
+/// </summary>
 public class AxisManager : MonoBehaviour
 {
 	GridManager GridManager;
@@ -36,11 +39,15 @@ public class AxisManager : MonoBehaviour
 		GridManager = GetComponent<GridManager>();
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	public void CreateAxes()
 	{
-		// Origin
-		GetHighestValues();
+		// Instantiate the origin.
 		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
+
+		GetHighestValues();
 		Axes = new GameObject[3];
 
 		CreateAxis(AxisDirection.X, Quaternion.identity);
@@ -59,12 +66,21 @@ public class AxisManager : MonoBehaviour
 		GridManager.DrawGrid(NumberOfAxisPoints);
 	}
 
-	private void CreateAxis(AxisDirection direction, Quaternion rotation)
+	/// <summary>
+	/// Instantiate the axis prefab for a given direction
+	/// </summary>
+	/// <param name="direction"></param>
+	/// <param name="rotation"></param>
+	void CreateAxis(AxisDirection direction, Quaternion rotation)
 	{
 		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
 	}
 
-	private void GetHighestValues()
+	/// <summary>
+	/// From our 2D array of data, get the max point for each axis which will serve 
+	/// as the max point on the respective axis.
+	/// </summary>
+	void GetHighestValues()
 	{
 		for (int i = 0; i < (DataValues.Length/3); i++)
 		{
@@ -74,17 +90,9 @@ public class AxisManager : MonoBehaviour
 		}
 	}
 
-	private float[] CreateAxisPointsFromMax(float max)
-	{
-		float[] axisPoints = new float[NumberOfAxisPoints];
-		for(int i = 0; i < NumberOfAxisPoints; i++)
-		{
-			axisPoints[i] = (max / NumberOfAxisPoints) * (i + 1);
-			if(DebugEnabled) Debug.Log("Point " + i + " is " + axisPoints[i]);
-		}
-		return axisPoints;
-	}
-
+	/// <summary>
+	/// 
+	/// </summary>
 	public void PlotAllPoints()
 	{
 		for (int i = 0; i < DataValues.Length / 3; i++)
@@ -93,6 +101,12 @@ public class AxisManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="z"></param>
 	public void PlotGameObject(float x, float y, float z)
 	{
 		GameObject point = GameObject.Instantiate(DataPointPrefab, 

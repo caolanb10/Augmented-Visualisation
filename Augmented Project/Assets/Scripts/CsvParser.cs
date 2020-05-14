@@ -5,6 +5,9 @@ using System;
 using UnityEngine;
 using static Axis;
 
+/// <summary>
+/// 
+/// </summary>
 public class CsvParser : MonoBehaviour
 {
 	public VisualisationManager VisualisationManager;
@@ -30,7 +33,10 @@ public class CsvParser : MonoBehaviour
 	public int[,] DataSetNumericalDataIndex = new int[2, Axis.NumberOfDirections]
 	{ { 2, 3, 4 }, { 0, 1, 2 } };
 
-	// Function Called by the play button, this begins the visualisation
+	/// <summary>
+	/// Function called by the play button, this begins the visualisation
+	/// </summary>
+	/// <param name="index"></param>
 	public void BeginVisualisation(int index)
 	{
 		ReadDataFromFile(DatasetPaths[index]);
@@ -39,6 +45,10 @@ public class CsvParser : MonoBehaviour
 
 	StreamReader Stream;
 
+	/// <summary>
+	/// Takes a path to a CSV file and stores it in memory in a 2-D Array.
+	/// </summary>
+	/// <param name="path"></param>
 	public void ReadDataFromFile(string path)
 	{
 		if (File.Exists(path))
@@ -86,3 +96,30 @@ public class CsvParser : MonoBehaviour
 		ReadData();
 	}
 }
+/* 
+ 	public AxisManager AxisManager;
+	public CsvParser CsvParser;
+
+	public void Visualise(int index)
+	{
+		AxisManager.DataValues = new float[
+			CsvParser.Data.Length/Axis.NumberOfDirections,
+			Axis.NumberOfDirections
+		];
+
+		int[] indices = {
+			CsvParser.DataSetNumericalDataIndex[index, (int) AxisDirection.X],
+			CsvParser.DataSetNumericalDataIndex[index, (int) AxisDirection.Y],
+			CsvParser.DataSetNumericalDataIndex[index, (int) AxisDirection.Z]
+		};
+
+		for (int i = 0; i < CsvParser.NumberOfRows - 1; i++)
+		{
+			AxisManager.DataValues[i, 0] = float.Parse(CsvParser.Data[indices[i], (int)AxisDirection.X]);
+			AxisManager.DataValues[i, 1] = float.Parse(CsvParser.Data[indices[i], (int)AxisDirection.Y]);
+			AxisManager.DataValues[i, 2] = float.Parse(CsvParser.Data[indices[i], (int)AxisDirection.Z]);
+		}
+
+		AxisManager.CreateAxes();
+		AxisManager.PlotAllPoints();
+	}*/

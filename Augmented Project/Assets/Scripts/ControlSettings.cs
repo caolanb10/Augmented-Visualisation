@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ControlSettings : MonoBehaviour
 {
+	Dropdown dropdown;
+
 	public GridManager GridManager;
 	public GameObject DataPointRoot;
 	public GameObject[] Datapoints;
@@ -12,6 +14,16 @@ public class ControlSettings : MonoBehaviour
 	bool DataPointsEnabled = false;
 	int NumberOfDataPoints;
 
+	public void Awake()
+	{
+		dropdown = gameObject.GetComponent<Dropdown>();
+	}
+
+	/// <summary>
+	/// Handles input from user from the control settings dropdown, where index is the index of
+	/// the selected option from top (0 (ignored)) to bottom (2).
+	/// </summary>
+	/// <param name="index"></param>
 	public void HandleValueChanged(int index)
 	{
 		switch (index)
@@ -34,7 +46,7 @@ public class ControlSettings : MonoBehaviour
 	/// </summary>
 	public void ResetDropdown()
 	{
-		gameObject.GetComponent<Dropdown>().value = 0;
+		dropdown.value = 0;
 	}
 
 	/// <summary>

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that contains an enumeration between the x, y, z and 0, 1, 2
+/// </summary>
 public class Axis : MonoBehaviour
 {
 	public const int NumberOfDirections = 3;

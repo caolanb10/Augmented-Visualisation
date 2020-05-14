@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AxisSetup : MonoBehaviour
+/// <summary>
+/// Used for labeling the axis with its numerical information.
+/// </summary>
+public class AxisPieceSetup : MonoBehaviour
 {
-	public GameObject AxisText;
 	public TextMeshPro AxisTextMesh;
 
 	public void AssignAxisLabel(float label)

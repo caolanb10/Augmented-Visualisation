@@ -12,6 +12,14 @@ public class SpeedControlSettings : MonoBehaviour
 		dropdown = gameObject.GetComponent<Dropdown>();
 	}
 
+	/// <summary>
+	/// Handles input from user from the speed control settings dropdown, where index is the index of
+	/// the selected option from top (0 (ignored)) to bottom (2).
+	/// 
+	/// These values will affect the rate at which the animation in the visualisation will progress.
+	/// 
+	/// </summary>
+	/// <param name="index"></param>
 	public void HandleValueChanged(int index)
 	{
 		switch (index)
@@ -29,8 +37,12 @@ public class SpeedControlSettings : MonoBehaviour
 		ResetDropdown();
 	}
 
+	/// <summary>
+	/// After action is called, change value of dropdown to the 
+	/// first value which is the title of the dropdown
+	/// </summary>
 	public void ResetDropdown()
 	{
-		gameObject.GetComponent<Dropdown>().value = 0;
+		dropdown.value = 0;
 	}
 }
