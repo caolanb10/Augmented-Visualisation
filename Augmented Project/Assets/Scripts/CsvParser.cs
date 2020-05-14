@@ -4,13 +4,14 @@ using System.IO;
 using System;
 using UnityEngine;
 using static Axis;
+using static Dates;
 
 /// <summary>
 /// 
 /// </summary>
 public class CsvParser : MonoBehaviour
 {
-	public VisualisationManager VisualisationManager;
+	// public VisualisationManager VisualisationManager;
 	public int NumberOfColumns;
 	public int NumberOfRows;
 
@@ -19,6 +20,8 @@ public class CsvParser : MonoBehaviour
 	
 	// 2D grid/array of all data from the csv file
 	public string[,] Data;
+
+	public int NumberOfCountries = 11;
 
 	static string DatasetDirectoryPath = "Assets/Datasets/";
 
@@ -40,13 +43,14 @@ public class CsvParser : MonoBehaviour
 	public void BeginVisualisation(int index)
 	{
 		ReadDataFromFile(DatasetPaths[index]);
-		VisualisationManager.Visualise(index);
+		GetCountryDataFromDate(0);
+		// VisualisationManager.Visualise(index);
 	}
 
 	StreamReader Stream;
 
 	/// <summary>
-	/// Takes a path to a CSV file and stores it in memory in a 2-D Array.
+	/// Takes a path to a CSV file, parses it and stores it in memory in a 2-D Array.
 	/// </summary>
 	/// <param name="path"></param>
 	public void ReadDataFromFile(string path)
@@ -95,7 +99,31 @@ public class CsvParser : MonoBehaviour
 		InitDataArray();
 		ReadData();
 	}
+
+	public void DebugData()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < NumberOfColumns; j++)
+			{
+				Debug.Log(Data[i, j]);
+			}
+		}
+	}
+
+	public void GetCountryDataFromDate(int daysFromBeginning)
+	{
+		for(int i = 0; i < NumberOfCountries; i++)
+		{
+			int rowOffset = (Dates.TotalDays * i) + daysFromBeginning;
+			Debug.Log("Offset" + rowOffset.ToString());
+
+			// Should print all country names
+			Debug.Log(Data[rowOffset, 0] + Data[rowOffset, 1]);
+		}
+	}
 }
+
 /* 
  	public AxisManager AxisManager;
 	public CsvParser CsvParser;

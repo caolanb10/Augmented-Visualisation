@@ -32,7 +32,7 @@ public class AxisManager : MonoBehaviour
 	public float[] DataValuesMax = new float[Axis.NumberOfDirections] { 0, 0, 0 };
 	
 	// { {x, y, z}, {x, y, z} } \\
-	public float[,] DataValues;
+	public float[,] LatestData;
 
 	void Start()
 	{
@@ -47,21 +47,16 @@ public class AxisManager : MonoBehaviour
 		// Instantiate the origin.
 		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
 
-		GetHighestValues();
+		// GetHighestValues();
 		Axes = new GameObject[3];
 
 		CreateAxis(AxisDirection.X, Quaternion.identity);
 		CreateAxis(AxisDirection.Y, Quaternion.Euler(0, 0, 90.0f));
 		CreateAxis(AxisDirection.Z, Quaternion.Euler(0, -90.0f, 0));
 
-		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>()
-			.Draw(CreateAxisPointsFromMax(DataValuesMax[0]), AxisDirection.X);
-
-		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>()
-			.Draw(CreateAxisPointsFromMax(DataValuesMax[1]), AxisDirection.Y);
-
-		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>()
-			.Draw(CreateAxisPointsFromMax(DataValuesMax[2]), AxisDirection.Z);
+		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(AxisDirection.X, DataValuesMax[0]);
+		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(AxisDirection.Y, DataValuesMax[1]);
+		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(AxisDirection.Z, DataValuesMax[2]);
 
 		GridManager.DrawGrid(NumberOfAxisPoints);
 	}
@@ -74,12 +69,14 @@ public class AxisManager : MonoBehaviour
 	void CreateAxis(AxisDirection direction, Quaternion rotation)
 	{
 		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
+		Axes[(int)direction].GetComponent<AxisGenerator>().AxisManager = this;
 	}
 
 	/// <summary>
 	/// From our 2D array of data, get the max point for each axis which will serve 
 	/// as the max point on the respective axis.
 	/// </summary>
+	/* 
 	void GetHighestValues()
 	{
 		for (int i = 0; i < (DataValues.Length/3); i++)
@@ -89,17 +86,7 @@ public class AxisManager : MonoBehaviour
 			DataValuesMax[2] = DataValues[i, 2] > DataValuesMax[2] ? DataValues[i, 2] : DataValuesMax[2];
 		}
 	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public void PlotAllPoints()
-	{
-		for (int i = 0; i < DataValues.Length / 3; i++)
-		{
-			PlotGameObject(DataValues[i, 0], DataValues[i, 1], DataValues[i, 2]);
-		}
-	}
+	*/
 
 	/// <summary>
 	/// 

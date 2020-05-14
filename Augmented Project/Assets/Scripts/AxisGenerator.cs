@@ -9,6 +9,8 @@ using static Axis;
 /// </summary>
 public class AxisGenerator : MonoBehaviour
 {
+	public AxisManager AxisManager;
+
 	// References to prefabs
 	public GameObject AxisTopPrefab;
 	public GameObject AxisPiecePrefab;
@@ -30,10 +32,10 @@ public class AxisGenerator : MonoBehaviour
 	/// </summary>
 	/// <param name="vals"></param>
 	/// <param name="direction"></param>
-	public void Draw(float[] vals, AxisDirection direction)
+	public void Draw(AxisDirection direction, float maxValue)
 	{
 		this.Direction = direction;
-		AxisPoints = vals;
+		CreateAxisPointsFromMax(maxValue);
 		InstantiateGameObjects();
 		CreateAxis();
 	}
@@ -94,18 +96,17 @@ public class AxisGenerator : MonoBehaviour
 	}
 
 	/// <summary>
-	/// 
+	/// Generates axis labels for each piece of the axis, between 0 and Max value for a domain (x, y, z)
 	/// </summary>
 	/// <param name="max"></param>
 	/// <returns></returns>
-	float[] CreateAxisPointsFromMax(float max)
+	void CreateAxisPointsFromMax(float max)
 	{
-		float[] axisPoints = new float[NumberOfAxisPoints];
-		for (int i = 0; i < NumberOfAxisPoints; i++)
+		AxisPoints = new float[AxisManager.NumberOfAxisPoints];
+		for (int i = 0; i < AxisManager.NumberOfAxisPoints; i++)
 		{
-			axisPoints[i] = (max / NumberOfAxisPoints) * (i + 1);
-			if (DebugEnabled) Debug.Log("Point " + i + " is " + axisPoints[i]);
+			AxisPoints[i] = (max / AxisManager.NumberOfAxisPoints) * (i + 1);
+			if (AxisManager.DebugEnabled) Debug.Log("Point " + i + " is " + AxisPoints[i]);
 		}
-		return axisPoints;
 	}
 }
