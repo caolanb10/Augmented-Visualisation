@@ -5,7 +5,7 @@ using TMPro;
 using static Axis;
 
 /// <summary>
-/// AxisGenerator class is used to dynamically create the game objects used for a single axis. 
+/// AxisGenerator class is used to dynamically create the game objects used for a single axis.
 /// </summary>
 public class AxisGenerator : MonoBehaviour
 {
@@ -85,7 +85,7 @@ public class AxisGenerator : MonoBehaviour
 
 			AxisPieces[i] = GameObject.Instantiate(AxisPiecePrefab, gameObject.transform, false);
 			AxisPieces[i].transform.Translate(position);
-			AxisPieces[i].GetComponentInChildren<AxisPieceSetup>().AssignAxisLabel(AxisPoints[i]);
+			AxisPieces[i].GetComponentInChildren<AxisPieceSetup>().AssignAxisLabel((int) AxisPoints[i]);
 
 			//Rotate text for Y axis
 			if (Direction == AxisDirection.Y)

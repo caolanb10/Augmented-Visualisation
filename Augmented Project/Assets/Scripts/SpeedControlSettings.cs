@@ -5,36 +5,29 @@ using UnityEngine.UI;
 
 public class SpeedControlSettings : MonoBehaviour
 {
-	Dropdown dropdown;
+	public VisualisationManager VisualisationManager;
+	Dropdown Dropdown;
+	float CurrentSpeed = 1.0f;
 	
 	public void Awake()
 	{
-		dropdown = gameObject.GetComponent<Dropdown>();
+		Dropdown = gameObject.GetComponent<Dropdown>();
 	}
 
 	/// <summary>
-	/// Handles input from user from the speed control settings dropdown, where index is the index of
-	/// the selected option from top (0 (ignored)) to bottom (2).
-	/// 
 	/// These values will affect the rate at which the animation in the visualisation will progress.
-	/// 
 	/// </summary>
 	/// <param name="index"></param>
 	public void HandleValueChanged(int index)
 	{
-		switch (index)
+		if (index != 0)
 		{
-			case 1:
-				Debug.Log(dropdown.options[1].text);
-				break;
-			case 2:
-				Debug.Log(dropdown.options[2].text);
-				break;
-			case 3:
-				Debug.Log(dropdown.options[3].text);
-				break;
+			string selection = Dropdown.options[index].text;
+			CurrentSpeed = float.Parse(selection);
+
+			ResetDropdown();
+			VisualisationManager.CurrentSpeed = CurrentSpeed;
 		}
-		ResetDropdown();
 	}
 
 	/// <summary>
@@ -43,6 +36,6 @@ public class SpeedControlSettings : MonoBehaviour
 	/// </summary>
 	public void ResetDropdown()
 	{
-		dropdown.value = 0;
+		Dropdown.value = 0;
 	}
 }

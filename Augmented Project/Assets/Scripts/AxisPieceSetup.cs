@@ -10,7 +10,7 @@ public class AxisPieceSetup : MonoBehaviour
 {
 	public TextMeshPro AxisTextMesh;
 
-	public void AssignAxisLabel(float label)
+	public void AssignAxisLabel(int label)
 	{
 		AxisTextMesh.text = label.ToString();
 	}

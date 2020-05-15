@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class ControlSettings : MonoBehaviour
 {
-	Dropdown dropdown;
+	Dropdown Dropdown;
 
 	public GridManager GridManager;
+	public Countries Countries;
+
 	public GameObject DataPointRoot;
 	public GameObject[] Datapoints;
 
@@ -16,7 +18,7 @@ public class ControlSettings : MonoBehaviour
 
 	public void Awake()
 	{
-		dropdown = gameObject.GetComponent<Dropdown>();
+		Dropdown = gameObject.GetComponent<Dropdown>();
 	}
 
 	/// <summary>
@@ -46,7 +48,7 @@ public class ControlSettings : MonoBehaviour
 	/// </summary>
 	public void ResetDropdown()
 	{
-		dropdown.value = 0;
+		Dropdown.value = 0;
 	}
 
 	/// <summary>
@@ -60,25 +62,6 @@ public class ControlSettings : MonoBehaviour
 	public void EnableOrDisableLabels()
 	{
 		DataPointsEnabled = !DataPointsEnabled;
-
-		if(Datapoints.Length == 0)
-		{
-			Debug.Log("First call");
-			NumberOfDataPoints = DataPointRoot.transform.childCount;
-			Debug.Log(NumberOfDataPoints);
-			Datapoints = new GameObject[NumberOfDataPoints];
-		}
-		else
-		{
-			Debug.Log(Datapoints);
-			Debug.Log("Second Call");
-		}
-
-		for (int i = 0; i < NumberOfDataPoints; i ++)
-		{
-			GameObject foundChild = DataPointRoot.transform.GetChild(i).gameObject;
-			Debug.Log(foundChild != null);
-			Datapoints[i] = foundChild;
-		}
+		Countries.ChangeLabelsEnabled();
 	}
 }

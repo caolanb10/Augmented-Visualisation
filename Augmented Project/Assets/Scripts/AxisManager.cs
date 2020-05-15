@@ -14,12 +14,8 @@ public class AxisManager : MonoBehaviour
 	public GameObject AxisPrefab;
 	public GameObject AxisOriginPrefab;
 
-	// Prefabs_DataPoints
-	public GameObject DataPointPrefab;
-
 	// Reference to game objects that have hierarchy for given game object type
 	public GameObject AxisRoot;
-	public GameObject DataPointRoot;
 
 	// x, y, z axes
 	public GameObject[] Axes;
@@ -28,21 +24,15 @@ public class AxisManager : MonoBehaviour
 
 	public int NumberOfAxisPoints = 20;
 
-	// { maxX, maxY, maxZ }
-	public float[] DataValuesMax = new float[Axis.NumberOfDirections] { 0, 0, 0 };
-	
-	// { {x, y, z}, {x, y, z} } \\
-	public float[,] LatestData;
-
 	void Start()
 	{
 		GridManager = GetComponent<GridManager>();
 	}
 
 	/// <summary>
-	/// 
+	/// Create the x, y and z axes using the max values found in the data set.
 	/// </summary>
-	public void CreateAxes()
+	public void CreateAxes(float[] maxValues)
 	{
 		// Instantiate the origin.
 		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
@@ -54,10 +44,12 @@ public class AxisManager : MonoBehaviour
 		CreateAxis(AxisDirection.Y, Quaternion.Euler(0, 0, 90.0f));
 		CreateAxis(AxisDirection.Z, Quaternion.Euler(0, -90.0f, 0));
 
-		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(AxisDirection.X, DataValuesMax[0]);
-		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(AxisDirection.Y, DataValuesMax[1]);
-		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(AxisDirection.Z, DataValuesMax[2]);
+		// Draw (Generate game objects and place them in their correct place)
+		Axes[(int)AxisDirection.X].GetComponent<AxisGenerator>().Draw(AxisDirection.X, maxValues[0]);
+		Axes[(int)AxisDirection.Y].GetComponent<AxisGenerator>().Draw(AxisDirection.Y, maxValues[1]);
+		Axes[(int)AxisDirection.Z].GetComponent<AxisGenerator>().Draw(AxisDirection.Z, maxValues[2]);
 
+		// Draw Grid
 		GridManager.DrawGrid(NumberOfAxisPoints);
 	}
 
@@ -70,42 +62,5 @@ public class AxisManager : MonoBehaviour
 	{
 		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
 		Axes[(int)direction].GetComponent<AxisGenerator>().AxisManager = this;
-	}
-
-	/// <summary>
-	/// From our 2D array of data, get the max point for each axis which will serve 
-	/// as the max point on the respective axis.
-	/// </summary>
-	/* 
-	void GetHighestValues()
-	{
-		for (int i = 0; i < (DataValues.Length/3); i++)
-		{
-			DataValuesMax[0] = DataValues[i, 0] > DataValuesMax[0] ? DataValues[i, 0] : DataValuesMax[0];
-			DataValuesMax[1] = DataValues[i, 1] > DataValuesMax[1] ? DataValues[i, 1] : DataValuesMax[1];
-			DataValuesMax[2] = DataValues[i, 2] > DataValuesMax[2] ? DataValues[i, 2] : DataValuesMax[2];
-		}
-	}
-	*/
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="x"></param>
-	/// <param name="y"></param>
-	/// <param name="z"></param>
-	public void PlotGameObject(float x, float y, float z)
-	{
-		GameObject point = GameObject.Instantiate(DataPointPrefab, 
-			new Vector3(
-				(x / DataValuesMax[0]) * NumberOfAxisPoints * 2,
-				(y / DataValuesMax[1]) * NumberOfAxisPoints * 2,
-				(z / DataValuesMax[2]) * NumberOfAxisPoints * 2
-			),
-			Quaternion.identity, 
-			DataPointRoot.transform);
-
-		// TODO add the data to the game objects script.
-		// point.GetComponent<>()
 	}
 }
