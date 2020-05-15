@@ -100,6 +100,32 @@ public class VisualisationManager : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Rewind the animation by 5 days
+	/// </summary>
+	public void Rewind()
+	{
+		CurrentDay -= 5;
+		if (CurrentDay < 0) CurrentDay = 0;
+
+		CurrentDayData = GetCountryDataFromDate(CurrentDay);
+		UpdateUI();
+		Visualise();
+	}
+
+	/// <summary>
+	/// Progress the animation by 5 days
+	/// </summary>
+	public void FastForward()
+	{
+		CurrentDay += 5;
+		if (CurrentDay >= Dates.TotalDays) CurrentDay = Dates.TotalDays - 1;
+
+		CurrentDayData = GetCountryDataFromDate(CurrentDay);
+		UpdateUI();
+		Visualise();
+	}
+
+	/// <summary>
 	/// Will progress the animation if it is playing and stop
 	/// (not progress) the animation if it is paused.
 	/// </summary>
@@ -112,14 +138,8 @@ public class VisualisationManager : MonoBehaviour
 			{
 				// Move onto next day
 				CurrentDayData = GetCountryDataFromDate(++CurrentDay);
-
-				// Get date for displaying to the UI
-				string datetime_string = Dates.GetDate(CurrentDay);
-				Notifications_UI.text = datetime_string;
-
-				// Notifications_UI.text
+				UpdateUI();
 				PreviousTime = CurrentTime;
-				// DebugData();
 				Visualise();
 			}
 		}
@@ -182,6 +202,17 @@ public class VisualisationManager : MonoBehaviour
 		ReadHeaders();
 		InitDataArray();
 		ReadData();
+	}
+
+	/// <summary>
+	/// Updates the notification bar with a formatted string of the current date
+	/// to support the user through the animated visualisation
+	/// </summary>
+	void UpdateUI()
+	{
+		// Get date for displaying to the UI
+		string datetime_string = Dates.GetDate(CurrentDay);
+		Notifications_UI.text = datetime_string;
 	}
 
 	/// <summary>
