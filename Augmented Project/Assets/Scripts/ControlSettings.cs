@@ -10,9 +10,6 @@ public class ControlSettings : MonoBehaviour
 	public GridManager GridManager;
 	public Countries Countries;
 
-	public GameObject DataPointRoot;
-	public GameObject[] Datapoints;
-
 	bool DataPointsEnabled = false;
 	int NumberOfDataPoints;
 

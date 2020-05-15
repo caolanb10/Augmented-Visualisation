@@ -646,17 +646,10 @@ MonoBehaviour:
     type: 3}
   AxisOriginPrefab: {fileID: 6735202126451526771, guid: fe396e4bf1c5a644ea23b02ccf84a154,
     type: 3}
-  DataPointPrefab: {fileID: 5726869053560022948, guid: f90f47486a704994fa91d46dfd69a400,
-    type: 3}
   AxisRoot: {fileID: 420725775}
-  DataPointRoot: {fileID: 1052188751}
   Axes: []
   DebugEnabled: 1
   NumberOfAxisPoints: 10
-  DataValuesMax:
-  - 0
-  - 0
-  - 0
 --- !u!4 &245488309
 Transform:
   m_ObjectHideFlags: 0
@@ -1344,6 +1337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d93589727bc56c448f687c03ecda125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Countries: {fileID: 723042570}
   AxisManager: {fileID: 245488308}
   NumberOfColumns: 0
   NumberOfRows: 0
@@ -1379,6 +1373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d40d6a488d2154191da7f1b4466ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AxisManager: {fileID: 245488308}
+  VisualisationManager: {fileID: 723042568}
+  DataPointRoot: {fileID: 1052188751}
   OrbPrefabs:
   - {fileID: 8869431407344133549, guid: eb594ed2490e1b74ba0ddc9bd66db341, type: 3}
   - {fileID: 2292139570066908292, guid: 8215c0636d276d04fb8b75a7f4dfe6a3, type: 3}
@@ -3330,8 +3327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridManager: {fileID: 245488310}
-  DataPointRoot: {fileID: 0}
-  Datapoints: []
+  Countries: {fileID: 723042570}
 --- !u!1 &1952717058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3413,18 +3409,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952717061}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 723042570}
-        m_MethodName: Test
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1952717061
 MonoBehaviour:
   m_ObjectHideFlags: 0
