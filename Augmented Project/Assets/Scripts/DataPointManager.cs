@@ -12,6 +12,10 @@ public class DataPointManager : MonoBehaviour
 	public GameObject DataAnnotation;
 	public GameObject Flag;
 
+	public float Confirmed;
+	public float Recovered;
+	public float Deaths;
+
 	/// <summary>
 	/// Reference to camera in the scene, used for rotation
 	/// Begin with annotations disabled
@@ -47,10 +51,17 @@ public class DataPointManager : MonoBehaviour
 	/// <param name="label"></param>
 	public void SetLabel(float ConfirmedFigure, float RecoveredFigure, float DeathsFigure)
 	{
+		Confirmed = ConfirmedFigure;
+		Recovered = RecoveredFigure;
+		Deaths = DeathsFigure;
+
 		string newLine = "\n";
+
 		string label =
 			"Confirmed: " + ConfirmedFigure.ToString() + newLine +
 			"Recovered: " + RecoveredFigure.ToString() + newLine +
 			"Deaths: " + DeathsFigure.ToString();
+
+		TMP.text = label;
 	}
 }

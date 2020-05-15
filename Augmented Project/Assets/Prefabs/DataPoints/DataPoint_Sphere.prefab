@@ -147,6 +147,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6619071858516998660}
     m_Modifications:
+    - target: {fileID: 75588553340591573, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1156841892397344617, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -257,6 +262,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataPoint_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4552345610203640784, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -295,7 +305,17 @@ PrefabInstance:
     - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
-      value: 33
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776108884948041592, guid: c7291d717acd91d44a5697542aa2cb46,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7291d717acd91d44a5697542aa2cb46, type: 3}

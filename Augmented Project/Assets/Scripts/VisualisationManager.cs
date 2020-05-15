@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// 
@@ -13,6 +14,8 @@ public class VisualisationManager : MonoBehaviour
 
 	public Countries Countries;
 	public AxisManager AxisManager;
+
+	public TextMeshProUGUI Notifications_UI;
 
 	public int NumberOfColumns;
 	public int NumberOfRows;
@@ -54,6 +57,9 @@ public class VisualisationManager : MonoBehaviour
 		ReadDataFromFile();
 
 		CurrentDay = 0;
+
+		Dates.PopulateDates();
+		// Dates.DebugDates();
 
 		// First day
 		CurrentDayData = GetCountryDataFromDate(CurrentDay);
@@ -106,8 +112,14 @@ public class VisualisationManager : MonoBehaviour
 			{
 				// Move onto next day
 				CurrentDayData = GetCountryDataFromDate(++CurrentDay);
+
+				// Get date for displaying to the UI
+				string datetime_string = Dates.GetDate(CurrentDay);
+				Notifications_UI.text = datetime_string;
+
+				// Notifications_UI.text
 				PreviousTime = CurrentTime;
-				DebugData();
+				// DebugData();
 				Visualise();
 			}
 		}
@@ -204,7 +216,7 @@ public class VisualisationManager : MonoBehaviour
 		float DeathsFigure;
 
 		// Numerical information is located in columns 2, 3, 4
-		for (int i = 0; i < Countries.NumberOfCountries - 1; i++)
+		for (int i = 0; i < Countries.NumberOfCountries; i++)
 		{
 			CountryName = CurrentDayData[i, 1];
 			ConfirmedFigure = float.Parse(CurrentDayData[i, 2]);
