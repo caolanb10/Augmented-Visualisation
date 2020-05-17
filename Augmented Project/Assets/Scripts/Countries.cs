@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that represents the countries selected for this visualisation.
+/// The top 10 countries that had coronavirus cases were selected as well as Ireland.
+/// </summary>
 public class Countries : MonoBehaviour
 {
 	public const int NumberOfCountries = 11;
@@ -10,6 +14,7 @@ public class Countries : MonoBehaviour
 	public AxisManager AxisManager;
 	public VisualisationManager VisualisationManager;
 
+	// Parent Object
 	public GameObject DataPointRoot;
 
 	// Reference to Prefabs to be instantiated
@@ -46,23 +51,33 @@ public class Countries : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Move country game object to its position in the scatter plot, called in VisualisationManager
+	/// as the dates change. 
+	/// </summary>
+	/// <param name="Country"></param>
+	/// <param name="ConfirmedFigure"></param>
+	/// <param name="RecoveredFigure"></param>
+	/// <param name="DeathsFigure"></param>
 	public void MoveCountryObject(string Country, float ConfirmedFigure, float RecoveredFigure, float DeathsFigure)
 	{
+		// Convert United Kingdom to a single word enum value.
 		if (Country == "United Kingdom") Country = "UK";
 		int index = (int) Enum.Parse(typeof(CountriesEnum), Country);
 
+		// Update relevant country game object annotation
 		CountryGameObjects[index].GetComponent<DataPointManager>()
 			.SetLabel(ConfirmedFigure, RecoveredFigure, DeathsFigure);
 
-		Vector3 countryGameObjectPosition = CountryGameObjects[index].transform.position;
-
+		// Convert data values to points in the visualisation.
 		Vector3 newPos = new Vector3(
 				(ConfirmedFigure / VisualisationManager.DataValuesMax[0]) * AxisManager.NumberOfAxisPoints * 2,
 				(RecoveredFigure / VisualisationManager.DataValuesMax[1]) * AxisManager.NumberOfAxisPoints * 2,
 				(DeathsFigure / VisualisationManager.DataValuesMax[2]) * AxisManager.NumberOfAxisPoints * 2
 			);
 
-		CountryGameObjects[index].transform.position = newPos;
+		// Also add position of parent for moving visualisation by the user.
+		CountryGameObjects[index].transform.position = (newPos + DataPointRoot.transform.position);
 	}
 
 	/// <summary>
@@ -74,23 +89,5 @@ public class Countries : MonoBehaviour
 		{
 			country.GetComponentInChildren<DataPointManager>().ChangePopupStatus();
 		}
-	}
-
-	/// <summary>
-	/// Testing enumerations
-	/// </summary>
-	public void Test()
-	{
-		MoveCountryObject("Brazil", 0, 0, 0);
-		MoveCountryObject("France", 0, 0, 0);
-		MoveCountryObject("Germany", 0, 0, 0);
-		MoveCountryObject("Iran", 0, 0, 0);
-		MoveCountryObject("Ireland", 0, 0, 0);
-		MoveCountryObject("Italy", 0, 0, 0);
-		MoveCountryObject("Russia", 0, 0, 0);
-		MoveCountryObject("Spain", 0, 0, 0);
-		MoveCountryObject("Turkey", 0, 0, 0);
-		MoveCountryObject("US", 0, 0, 0);
-		MoveCountryObject("United Kingdom", 0, 0, 0);
 	}
 }

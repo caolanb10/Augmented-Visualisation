@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Script attached to each of the country orbs.
+/// 
+/// For each frame of the scene, the country orbs will rotate so that they are always facing the camera
+/// 
+/// The annotation is also moved to face the camera from any angle.
+/// 
+/// This script is used to enable/disable the data annotations from the controls dropdown. 
+/// </summary>
 public class DataPointManager : MonoBehaviour
 {
 	GameObject MainCamera;

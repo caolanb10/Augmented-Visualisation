@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script for changing the speed of the visualsation. 
+/// 
+/// Sets the "CurrentSpeed" variable in the visualisation manager when the user selects a value.
+/// 
+/// Resets the dropdown to have the value "Speed Control" after every input. 
+/// </summary>
 public class SpeedControlSettings : MonoBehaviour
 {
 	public VisualisationManager VisualisationManager;

@@ -6,6 +6,10 @@ using static Axis;
 
 /// <summary>
 /// AxisGenerator class is used to dynamically create the game objects used for a single axis.
+/// 
+/// Called by the axis manager for the 3 axes.
+/// 
+/// Uses a max value and a set number of points along the axis and interpolates between 0 and the max value. 
 /// </summary>
 public class AxisGenerator : MonoBehaviour
 {
@@ -97,6 +101,7 @@ public class AxisGenerator : MonoBehaviour
 
 	/// <summary>
 	/// Generates axis labels for each piece of the axis, between 0 and Max value for a domain (x, y, z)
+	/// Debugger for verifying.
 	/// </summary>
 	/// <param name="max"></param>
 	/// <returns></returns>

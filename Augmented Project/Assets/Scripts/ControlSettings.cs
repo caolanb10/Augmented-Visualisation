@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script used for the control settings dropdown. 
+/// 
+/// Enables/Disables the grid
+/// 
+/// Enables/Disables the data annotations
+/// 
+/// Resets the dropdown to have the value "Controls" after every input. 
+/// </summary>
 public class ControlSettings : MonoBehaviour
 {
 	Dropdown Dropdown;

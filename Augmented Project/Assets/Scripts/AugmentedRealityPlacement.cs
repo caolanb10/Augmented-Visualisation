@@ -5,6 +5,25 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using TMPro;
 
+/// <summary>
+/// 
+/// Class for implementing augmented reality aspect of this visualisation.
+/// 
+/// Using: ARFoundation.
+/// 
+/// ARraycastManager, ARPlaneManager are enabled by default at the start of the scene.
+/// 
+/// On each update, raycast from the center of the screen toward the planes. 
+/// 
+/// If it strikes a plane, move the root of the visualisation to the position of where it hit the plane.
+/// 
+/// Has functionality for scaling the visualisation.
+/// 
+/// When the visualisation has been placed into the scene and scaled accordingly, 
+/// DisableARPlacementManager() is called to stop tracking planes in the scene and the 
+/// root of the visualisation will remain in place. 
+/// 
+/// </summary>
 public class AugmentedRealityPlacement : MonoBehaviour
 {
 	ARPlaneManager ARPlaneManager;
@@ -20,7 +39,7 @@ public class AugmentedRealityPlacement : MonoBehaviour
 	bool firstUpdate = true;
 
 	/// <summary>
-	/// 
+	/// Get references to scripts on this game object before first frame.
 	/// </summary>
 	private void Awake()
 	{
@@ -28,17 +47,19 @@ public class AugmentedRealityPlacement : MonoBehaviour
 		ARPlaneManager = GetComponent<ARPlaneManager>();
 	}
 
+	/// <summary>
+	/// Called on first update to adjust the scale of the scene to be suitable for an
+	/// AR environment.
+	/// </summary>
 	void SetInitialScale()
 	{
 		float initialScale = 12.0f;
 		gameObject.transform.localScale = new Vector3(initialScale, initialScale, initialScale);
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
 	private void FixedUpdate()
 	{
+		// Was having issues doing this in start/awake so a slightly hackier way is done here.
 		if (firstUpdate)
 		{
 			SetInitialScale();
@@ -46,9 +67,12 @@ public class AugmentedRealityPlacement : MonoBehaviour
 		}
 
 		if (!Active) return;
+
+		// Vector representing our crosshairs from the UI.
 		Vector3 centerOfScreen = new Vector3(Screen.width / 2, Screen.height / 2);
 		Ray ray = ARCamera.ScreenPointToRay(centerOfScreen);
 
+		// Cast from the crosshairs against the planes found.
 		if (ARRaycastManager.Raycast(ray, RayHits, TrackableType.PlaneWithinPolygon))
 		{
 			Pose hitPose = RayHits[0].pose;

@@ -4,6 +4,11 @@ using UnityEngine;
 using static Axis;
 
 /// <summary>
+/// Class for creating the axes for the visualisation.
+/// 
+/// Calls Axis generator for x, y and z axis.
+/// 
+/// Uses max values for x, y and z from the latest data in the visualisation manager.
 /// 
 /// </summary>
 public class AxisManager : MonoBehaviour
@@ -35,7 +40,10 @@ public class AxisManager : MonoBehaviour
 	public void CreateAxes(float[] maxValues)
 	{
 		// Instantiate the origin.
-		GameObject.Instantiate(AxisOriginPrefab, Vector3.zero, Quaternion.identity, AxisRoot.transform);
+		GameObject.Instantiate(AxisOriginPrefab, 
+			AxisRoot.transform.position + Vector3.zero,
+			Quaternion.identity, 
+			AxisRoot.transform);
 
 		// GetHighestValues();
 		Axes = new GameObject[3];
@@ -60,7 +68,9 @@ public class AxisManager : MonoBehaviour
 	/// <param name="rotation"></param>
 	void CreateAxis(AxisDirection direction, Quaternion rotation)
 	{
-		Axes[(int)direction] = GameObject.Instantiate(AxisPrefab, Vector3.zero, rotation, AxisRoot.transform);
+		Axes[(int)direction] = 
+			GameObject.Instantiate(AxisPrefab, (AxisRoot.transform.position + Vector3.zero), rotation, AxisRoot.transform);
+
 		Axes[(int)direction].GetComponent<AxisGenerator>().AxisManager = this;
 	}
 }

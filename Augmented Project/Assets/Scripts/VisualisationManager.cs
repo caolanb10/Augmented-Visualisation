@@ -7,7 +7,21 @@ using UnityEngine.Networking;
 using TMPro;
 
 /// <summary>
+/// Class for managing the visualisation. 
 /// 
+/// Contains logic for reading the timeseries data from a csv file.
+/// 
+/// Will update the country game objects in the country class with the data from the CSV.
+/// 
+/// The date will change at the rate of CurrentSpeed, which is set through SpeedControlSettings class
+/// 
+/// Has media controls for advancing(fast forwarding) or retreating (rewinding) the date by 5 days. 
+/// 
+/// Also has pause controls to stop updating the date and subsequently the position of the countries.
+/// 
+/// Updates the UI with the current date for added contextualisation and information.
+/// 
+/// Takes data from the most recent day and uses that to create the axes for the visualisation
 /// </summary>
 public class VisualisationManager : MonoBehaviour
 {
@@ -61,7 +75,6 @@ public class VisualisationManager : MonoBehaviour
 		CurrentDay = 0;
 
 		Dates.PopulateDates();
-		// Dates.DebugDates();
 
 		// First day
 		CurrentDayData = GetCountryDataFromDate(CurrentDay);
@@ -165,74 +178,52 @@ public class VisualisationManager : MonoBehaviour
 	/// <param name="path"></param>
 	void ReadDataFromFile()
 	{
-		string filePath = Path.Combine(Application.streamingAssetsPath, DatasetAdjustedPopulationPath);
+		BetterStreamingAssets.Initialize();
 
-		Debug.Log(filePath);
-		StartCoroutine(GetRequest(filePath));
-
-		if (File.Exists(DatasetAdjustedPopulationPath))
+		if (BetterStreamingAssets.FileExists(DatasetAdjustedPopulationPath))
 		{
 			Debug.Log("Found File");
+			
+			// Better streaming assets is a library for accessing streaming assets for android builds
+			// developed using unity.  (Can't access the filesystem directly)
+			byte[] allData = BetterStreamingAssets.ReadAllBytes(DatasetAdjustedPopulationPath);
+			string fileContent = System.Text.Encoding.UTF8.GetString(allData, 0, allData.Length);
+
+			Rows = fileContent.Split('\n');
+			NumberOfRows = Rows.Length - 1;
+
+			// Seperate reading of first line of a CSV (The headers) and the rest of the lines (The data)
+			void ReadHeaders()
+			{
+				ColumnNames = Rows[0].Split(',');
+				NumberOfColumns = ColumnNames.Length;
+			}
+
+			void InitDataArray()
+			{
+				AllData = new string[NumberOfRows, NumberOfColumns];
+			}
+
+			void ReadData()
+			{
+				for (int i = 0; i < NumberOfRows - 1; i++)
+				{
+					int index = i + 1;
+					string[] currentRow = Rows[index].Split(',');
+					for (int j = 0; j < NumberOfColumns; j++)
+					{
+						AllData[i, j] = currentRow[j];
+					}
+				}
+			}
+
+			ReadHeaders();
+			InitDataArray();
+			ReadData();
 		}
 		else
 		{
-		}
-		Stream = new StreamReader(DatasetAdjustedPopulationPath);
-
-		string fileContent = Stream.ReadToEnd();
-
-		Rows = fileContent.Split('\n');
-		NumberOfRows = Rows.Length - 1;
-
-		// Seperate reading of first line of a CSV (The headers) and the rest of the lines (The data)
-		void ReadHeaders()
-		{
-			ColumnNames = Rows[0].Split(',');
-			NumberOfColumns = ColumnNames.Length;
-		}
-
-		void InitDataArray()
-		{
-			AllData = new string[NumberOfRows, NumberOfColumns];
-		}
-
-		void ReadData()
-		{
-			for (int i = 0; i < NumberOfRows - 1; i++)
-			{
-				int index = i + 1;
-				string[] currentRow = Rows[index].Split(',');
-				for (int j = 0; j < NumberOfColumns; j++)
-				{
-					AllData[i, j] = currentRow[j];
-				}
-			}
-		}
-
-		ReadHeaders();
-		InitDataArray();
-		ReadData();
-	}
-
-	/// <summary>
-	/// For making request to csv for android
-	/// </summary>
-	/// <param name="uri"></param>
-	/// <returns></returns>
-	IEnumerator GetRequest(string uri)
-	{
-		using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-		{
-			yield return webRequest.SendWebRequest();
-
-			if (webRequest.isNetworkError)
-			{
-				Debug.Log("Error: " + webRequest.error);
-			}
-			else
-			{
-				Debug.Log("Received: " + webRequest.downloadHandler.text);
-			}
+			Debug.Log("File Not Found");
 		}
 	}
 
