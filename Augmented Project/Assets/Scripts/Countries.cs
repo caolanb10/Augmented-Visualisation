@@ -62,8 +62,6 @@ public class Countries : MonoBehaviour
 				(DeathsFigure / VisualisationManager.DataValuesMax[2]) * AxisManager.NumberOfAxisPoints * 2
 			);
 
-		// Vector3 newPos = Vector3.MoveTowards(countryGameObjectPosition, new Vector3(x, y, z), 10);
-
 		CountryGameObjects[index].transform.position = newPos;
 	}
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 using TMPro;
 
 /// <summary>
@@ -42,7 +43,8 @@ public class VisualisationManager : MonoBehaviour
 
 	public int CurrentDay;
 
-	public static string DatasetPath = "Assets/Datasets/Filtered_dataset.csv";
+	public static string DatasetPath = "Filtered_dataset.csv";
+	public static string DatasetAdjustedPopulationPath = "Filtered_dataset_population.csv";
 
 	public float[] DataValuesMax = new float[Axis.NumberOfDirections] { 0, 0, 0 };
 
@@ -137,17 +139,21 @@ public class VisualisationManager : MonoBehaviour
 			if(CurrentTime >= PreviousTime + 1/CurrentSpeed)
 			{
 				// Move onto next day
-				CurrentDayData = GetCountryDataFromDate(++CurrentDay);
+				CurrentDay++;
+
+				// When it reaches the end, stop visualisation and set status to not started
+				if (CurrentDay == Dates.TotalDays)
+				{
+					IsPlaying = false;
+					HasStarted = false;
+					return;
+				}
+
+				CurrentDayData = GetCountryDataFromDate(CurrentDay);
 				UpdateUI();
 				PreviousTime = CurrentTime;
 				Visualise();
 			}
-		}
-		// When it reaches the end, stop visualisation and set status to not started
-		if(CurrentDay == Dates.TotalDays)
-		{
-			IsPlaying = false;
-			HasStarted = false;
 		}
 	}
 	#endregion
@@ -159,15 +165,19 @@ public class VisualisationManager : MonoBehaviour
 	/// <param name="path"></param>
 	void ReadDataFromFile()
 	{
-		if (File.Exists(DatasetPath))
+		string filePath = Path.Combine(Application.streamingAssetsPath, DatasetAdjustedPopulationPath);
+
+		Debug.Log(filePath);
+		StartCoroutine(GetRequest(filePath));
+
+		if (File.Exists(DatasetAdjustedPopulationPath))
 		{
 			Debug.Log("Found File");
 		}
 		else
 		{
-			Debug.Log("Not Found");
 		}
-		Stream = new StreamReader(DatasetPath);
+		Stream = new StreamReader(DatasetAdjustedPopulationPath);
 
 		string fileContent = Stream.ReadToEnd();
 
@@ -202,6 +212,28 @@ public class VisualisationManager : MonoBehaviour
 		ReadHeaders();
 		InitDataArray();
 		ReadData();
+	}
+
+	/// <summary>
+	/// For making request to csv for android
+	/// </summary>
+	/// <param name="uri"></param>
+	/// <returns></returns>
+	IEnumerator GetRequest(string uri)
+	{
+		using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+		{
+			yield return webRequest.SendWebRequest();
+
+			if (webRequest.isNetworkError)
+			{
+				Debug.Log("Error: " + webRequest.error);
+			}
+			else
+			{
+				Debug.Log("Received: " + webRequest.downloadHandler.text);
+			}
+		}
 	}
 
 	/// <summary>
@@ -250,9 +282,9 @@ public class VisualisationManager : MonoBehaviour
 		for (int i = 0; i < Countries.NumberOfCountries; i++)
 		{
 			CountryName = CurrentDayData[i, 1];
-			ConfirmedFigure = float.Parse(CurrentDayData[i, 2]);
-			RecoveredFigure = float.Parse(CurrentDayData[i, 3]);
-			DeathsFigure = float.Parse(CurrentDayData[i, 4]);
+			ConfirmedFigure = float.Parse(CurrentDayData[i, 5]);
+			RecoveredFigure = float.Parse(CurrentDayData[i, 6]);
+			DeathsFigure = float.Parse(CurrentDayData[i, 7]);
 
 			Countries.MoveCountryObject(CurrentDayData[i, 1], ConfirmedFigure, RecoveredFigure, DeathsFigure);
 		}
@@ -266,9 +298,9 @@ public class VisualisationManager : MonoBehaviour
 
 		for (int i = 0; i < (LastDayData.Length / NumberOfColumns); i++)
 		{
-			ConfirmedFigure = float.Parse(LastDayData[i, 2]);
-			RecoveredFigure = float.Parse(LastDayData[i, 3]);
-			DeathsFigure = float.Parse(LastDayData[i, 4]);
+			ConfirmedFigure = float.Parse(LastDayData[i, 5]);
+			RecoveredFigure = float.Parse(LastDayData[i, 6]);
+			DeathsFigure = float.Parse(LastDayData[i, 7]);
 
 			DataValuesMax[0] = ConfirmedFigure > DataValuesMax[0] ? ConfirmedFigure : DataValuesMax[0];
 			DataValuesMax[1] = RecoveredFigure > DataValuesMax[1] ? RecoveredFigure : DataValuesMax[1];

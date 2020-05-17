@@ -10,7 +10,7 @@ public class Dates : MonoBehaviour
 {
 	// From Dataset
 	public static DateTime StartDate = new DateTime(2020, 1, 22);
-	public static DateTime EndDate = new DateTime(2020, 5, 12);
+	public static DateTime EndDate = new DateTime(2020, 5, 15);
 
 	// Dates are inclusive for both start and end, so extra day must be added
 	public static int TotalDays = (EndDate - StartDate).Days + 1;

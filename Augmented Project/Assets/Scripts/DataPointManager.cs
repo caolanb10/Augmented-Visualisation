@@ -16,6 +16,7 @@ public class DataPointManager : MonoBehaviour
 	public float Recovered;
 	public float Deaths;
 
+
 	/// <summary>
 	/// Reference to camera in the scene, used for rotation
 	/// Begin with annotations disabled
@@ -56,11 +57,10 @@ public class DataPointManager : MonoBehaviour
 		Deaths = DeathsFigure;
 
 		string newLine = "\n";
-
 		string label =
-			"Confirmed: " + ConfirmedFigure.ToString() + newLine +
-			"Recovered: " + RecoveredFigure.ToString() + newLine +
-			"Deaths: " + DeathsFigure.ToString();
+			"Confirmed: " + ConfirmedFigure.ToString().Split('.')[0] + newLine +
+			"Recovered: " + RecoveredFigure.ToString().Split('.')[0] + newLine +
+			"Deaths: " + DeathsFigure.ToString().Split('.')[0];
 
 		TMP.text = label;
 	}
