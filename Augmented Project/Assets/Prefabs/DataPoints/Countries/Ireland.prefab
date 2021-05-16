@@ -15,32 +15,32 @@ PrefabInstance:
     - target: {fileID: 5726869053560022948, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_Name
-      value: DataPoint_Sphere Variant
+      value: Ireland
       objectReference: {fileID: 0}
     - target: {fileID: 6265115839482017825, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6265115839482017825, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6265115839482017825, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6265115839482017825, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6265115839482017825, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6619071858516998660, guid: f14ca2d2bce062c4ebcccfa93d8ab699,
         type: 3}
